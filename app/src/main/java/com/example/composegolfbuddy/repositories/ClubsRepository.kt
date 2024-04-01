@@ -1,4 +1,4 @@
-package com.multiplatform.clubdistances.homeScreen.repositories
+package com.example.composegolfbuddy.repositories
 import com.multiplatform.clubdistances.homeScreen.model.Club
 import kotlinx.coroutines.flow.Flow
 

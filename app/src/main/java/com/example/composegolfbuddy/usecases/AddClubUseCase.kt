@@ -1,7 +1,7 @@
 package com.multiplatform.clubdistances.homeScreen.useCases
 
+import com.example.composegolfbuddy.repositories.ClubsRepository
 import com.multiplatform.clubdistances.homeScreen.model.Club
-import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepository
 import javax.inject.Inject
 
 class AddClubUseCase @Inject constructor(

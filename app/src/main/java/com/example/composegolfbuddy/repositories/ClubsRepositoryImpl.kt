@@ -1,6 +1,7 @@
 package com.multiplatform.clubdistances.homeScreen.repositories
 
 import androidx.annotation.WorkerThread
+import com.example.composegolfbuddy.repositories.ClubsRepository
 import com.multiplatform.clubdistances.data.dao.ClubDao
 import com.multiplatform.clubdistances.homeScreen.model.Club
 import kotlinx.coroutines.flow.Flow

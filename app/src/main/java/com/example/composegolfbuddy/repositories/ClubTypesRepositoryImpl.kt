@@ -1,5 +1,6 @@
 package com.multiplatform.clubdistances.updateClubs.repositories
 
+import com.example.composegolfbuddy.repositories.ClubTypesRepository
 import com.multiplatform.clubdistances.homeScreen.model.ClubTypes
 import javax.inject.Inject
 
@@ -9,6 +10,4 @@ class ClubTypesRepositoryImpl @Inject constructor(
     override fun getClubTypes(): List<String> {
         return clubTypes.getClubTypes()
     }
-
-
 }

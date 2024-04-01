@@ -1,7 +1,7 @@
 package com.example.composegolfbuddy.usecases
 
+import com.example.composegolfbuddy.repositories.ClubsRepository
 import com.multiplatform.clubdistances.homeScreen.model.Club
-import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

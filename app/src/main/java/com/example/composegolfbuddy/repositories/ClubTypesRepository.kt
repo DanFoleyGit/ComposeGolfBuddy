@@ -1,4 +1,4 @@
-package com.multiplatform.clubdistances.updateClubs.repositories
+package com.example.composegolfbuddy.repositories
 
 interface ClubTypesRepository {
 

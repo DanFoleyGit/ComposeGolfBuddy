@@ -1,10 +1,10 @@
 package com.example.composegolfbuddy.di
 
+import com.example.composegolfbuddy.repositories.ClubTypesRepository
+import com.example.composegolfbuddy.repositories.ClubsRepository
 import com.multiplatform.clubdistances.data.dao.ClubDao
 import com.multiplatform.clubdistances.homeScreen.model.ClubTypes
-import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepository
 import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepositoryImpl
-import com.multiplatform.clubdistances.updateClubs.repositories.ClubTypesRepository
 import com.multiplatform.clubdistances.updateClubs.repositories.ClubTypesRepositoryImpl
 import dagger.Module
 import dagger.Provides

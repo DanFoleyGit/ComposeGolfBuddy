@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ClubDao {
 
-    @Query("SELECT * FROM club_table ORDER BY distance ASC")
+    @Query("SELECT * FROM club_table ORDER BY distance DESC")
     fun getAll(): Flow<List<Club>>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)

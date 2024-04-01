@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composegolfbuddy.screens.homeScreen.HomeScreenUiState
 import com.example.composegolfbuddy.screens.modifyclubsscreen.ModifyClubsStateUI
+import com.example.composegolfbuddy.usecases.GetClubTypesUseCase
 import com.example.composegolfbuddy.usecases.GetClubsStaticUseCase
+import com.example.composegolfbuddy.usecases.RetrieveClubByNameUseCase
 import com.multiplatform.clubdistances.homeScreen.model.Club
 import com.multiplatform.clubdistances.homeScreen.useCases.AddClubUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GbViewModel @Inject constructor(
+    private val getClubTypesUseCase: GetClubTypesUseCase,
+    private val retrieveClubByNameUseCase: RetrieveClubByNameUseCase,
     private val addClubUseCase: AddClubUseCase,
     private val getClubsStaticUseCase: GetClubsStaticUseCase
 ) : ViewModel() {
@@ -33,16 +37,18 @@ class GbViewModel @Inject constructor(
     private var _modifyClubsState = MutableStateFlow(ModifyClubsStateUI())
     var modifyClubsState: StateFlow<ModifyClubsStateUI> = _modifyClubsState.asStateFlow()
 
+    // clubTypes
+    var clubTypesList = getClubTypesUseCase.invoke()
+
     //modify clubs inputs
     var clubTypeInput by mutableStateOf("")
         private set
-
+    var clubTypeIndex by mutableStateOf(-1)
+        private set
     var clubBrandInput by mutableStateOf("")
         private set
-
     var clubLoftInput by mutableStateOf("")
         private set
-
     var distanceInput by mutableStateOf("")
         private set
 
@@ -50,6 +56,10 @@ class GbViewModel @Inject constructor(
         _homeScreenState.value = HomeScreenUiState()
         _modifyClubsState.value = ModifyClubsStateUI(false)
         populateClubsData()
+    }
+
+    fun updateClubTypeIndex(value: Int) {
+        clubTypeIndex = value
     }
 
     fun updateClubTypeValue(value: String) {
@@ -68,6 +78,7 @@ class GbViewModel @Inject constructor(
         distanceInput = value
     }
 
+    /* methods called in home screen */
     private fun populateClubsData() {
         viewModelScope.launch {
             _homeScreenState.update { currentState ->
@@ -76,36 +87,124 @@ class GbViewModel @Inject constructor(
         }
     }
 
+    /* methods called from ModifyClubsScreen */
     fun processClubInputs() {
-
-        /* TODO create validator class for each field */
-
-        if (clubTypeInput.isEmpty() ||
-            clubBrandInput.isEmpty() ||
-            clubLoftInput.isEmpty() ||
-            distanceInput.isEmpty()
-        ) {
-            _modifyClubsState.update { it ->
-                it.copy(errorState = true)
-            }
-        } else {
-            _modifyClubsState.update { it ->
-                it.copy(errorState = false)
-            }
-            insert()
+        if (validateFields()) {
+            clearErrorStates()
+            insertClub()
             resetFields()
             populateClubsData()
         }
     }
 
-    private fun resetFields() {
+    fun retrieveSelectedClub() {
+        viewModelScope.launch {
+            val retrievedClub = retrieveClubByNameUseCase.invoke(clubTypeInput)
+            if (retrievedClub != null) {
+                updateClubBrandValue(retrievedClub.clubBrand)
+                updateClubLoftValue(retrievedClub.clubLoft)
+                updateClubDistanceValue(retrievedClub.distance.toString())
+                clearErrorStates()
+            } else {
+                resetFields(false)
+            }
+        }
+    }
+
+    private fun clearErrorStates() {
+        _modifyClubsState.update { it ->
+            it.copy(
+                errorState = false,
+                clubTypeError = false,
+                clubBrandError = false,
+                clubLoftError = false,
+                distanceError = false
+            )
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        val textPattern = Regex("^[a-zA-Z0-9]+$")
+        val numPattern = Regex("^[0-9]+$")
+
+        if (clubTypeInput.isEmpty() || !clubTypeInput.matches(textPattern)) {
+            _modifyClubsState.update { it ->
+                it.copy(
+                    clubTypeError = true,
+                    clubTypeErrorMessage = "Needs to be letter two letter code."
+                )
+            }
+            return false
+        } else {
+            if (_modifyClubsState.value.clubTypeError) {
+                _modifyClubsState.update { it ->
+                    it.copy(clubTypeError = false)
+                }
+            }
+        }
+
+        if (clubBrandInput.isEmpty() || !clubBrandInput.matches(textPattern)) {
+            _modifyClubsState.update { it ->
+                it.copy(
+                    clubBrandError = true,
+                    clubBrandErrorMessage = "Can only contain letters."
+                )
+            }
+            return false
+        } else {
+            if (_modifyClubsState.value.clubBrandError) {
+                _modifyClubsState.update { it ->
+                    it.copy(clubBrandError = false)
+                }
+            }
+        }
+
+        if (clubLoftInput.isEmpty() || !clubLoftInput.matches(numPattern)) {
+            _modifyClubsState.update { it ->
+                it.copy(
+                    clubLoftError = true,
+                    clubLoftErrorMessage = "Can only be numbers."
+                )
+            }
+            return false
+        } else {
+            if (_modifyClubsState.value.clubLoftError) {
+                _modifyClubsState.update { it ->
+                    it.copy(clubLoftError = false)
+                }
+            }
+        }
+
+        if (distanceInput.isEmpty() || !distanceInput.matches(numPattern)) {
+            _modifyClubsState.update { it ->
+                it.copy(
+                    distanceError = true,
+                    distanceErrorMessage = "Can only be numbers."
+                )
+            }
+            return false
+        } else {
+            if (_modifyClubsState.value.distanceError) {
+                _modifyClubsState.update { it ->
+                    it.copy(distanceError = false)
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun resetFields(resetIndex: Boolean = true) {
         updateClubTypeValue("")
         updateClubBrandValue("")
         updateClubLoftValue("")
         updateClubDistanceValue("")
+        if (resetIndex) {
+            updateClubTypeIndex(-1)
+        }
     }
 
-    private fun insert() = viewModelScope.launch {
+    private fun insertClub() = viewModelScope.launch {
         addClubUseCase.invoke(
             Club(
                 clubTypeInput,

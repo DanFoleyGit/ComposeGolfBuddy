@@ -1,6 +1,6 @@
-package com.multiplatform.clubdistances.updateClubs.useCases
+package com.example.composegolfbuddy.usecases
 
-import com.multiplatform.clubdistances.updateClubs.repositories.ClubTypesRepository
+import com.example.composegolfbuddy.repositories.ClubTypesRepository
 import javax.inject.Inject
 
 class GetClubTypesUseCase @Inject constructor(

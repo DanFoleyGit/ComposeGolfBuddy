@@ -14,7 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composegolfbuddy.screens.GbViewModel
 import com.example.composegolfbuddy.screens.GolfBuddyScreen
-import com.example.composegolfbuddy.ui.theme.ComposeGolfBuddyTheme
+import com.example.composegolfbuddy.designsystem.ui.theme.ComposeGolfBuddyTheme
+import com.example.composegolfbuddy.screens.rangelogs.RangeLogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel by viewModels<GbViewModel>()
+        val rangeLogsViewModel by viewModels<RangeLogsViewModel>()
 
         setContent {
             ComposeGolfBuddyTheme {
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GolfBuddyScreen(viewModel)
+                    GolfBuddyScreen(viewModel, rangeLogsViewModel)
                 }
             }
         }

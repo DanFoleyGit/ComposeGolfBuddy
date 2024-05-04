@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.ui.theme
+package com.example.composegolfbuddy.designsystem.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

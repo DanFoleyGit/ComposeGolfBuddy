@@ -26,6 +26,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldForInputs
+import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldWithDropdown
+import com.example.composegolfbuddy.designsystem.compents.SubmitButton
 import com.example.composegolfbuddy.screens.GbViewModel
 
 @Composable
@@ -78,118 +81,119 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
         SubmitButton(processClubInputs = viewModel::processClubInputs)
     }
 }
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun OutlinedTextFieldForInputs(
+//    initialValue: String = "",
+//    valueChanged: (String) -> Unit,
+//    isErrorState: Boolean = false,
+//    errorMessage: String,
+//    title: String = "",
+//    maxLength: Int
+//) {
+//    Column(horizontalAlignment = Alignment.Start) {
+//        OutlinedTextField(
+//            value = initialValue,
+//            onValueChange = { newValue ->
+//                if (!newValue.endsWith(' ')) {
+//                    if (newValue.length <= maxLength) {
+//                        valueChanged(newValue)
+//                    }
+//                }
+//            },
+//            label = { Text(title) },
+//            isError = isErrorState,
+//            supportingText = {
+//                if (isErrorState) {
+//                    Text(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        text = errorMessage,
+//                        color = MaterialTheme.colorScheme.error
+//                    )
+//                }
+//            },
+//            singleLine = true
+//        )
+//    }
+//}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun OutlinedTextFieldForInputs(
-    initialValue: String = "",
-    valueChanged: (String) -> Unit,
-    isErrorState: Boolean = false,
-    errorMessage: String,
-    title: String = "",
-    maxLength: Int
-) {
-    Column(horizontalAlignment = Alignment.Start) {
-        OutlinedTextField(
-            value = initialValue,
-            onValueChange = { newValue ->
-                if (!newValue.endsWith(' ')) {
-                    if (newValue.length <= maxLength) {
-                        valueChanged(newValue)
-                    }
-                }
-            },
-            label = { Text(title) },
-            isError = isErrorState,
-            supportingText = {
-                if (isErrorState) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = errorMessage,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            },
-            singleLine = true
-        )
-    }
-}
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun OutlinedTextFieldWithDropdown(
+//    initialValue: String = "",
+//    valueChanged: (String) -> Unit,
+//    retrieveClub: () -> Unit,
+//    indexChanged: (Int) -> Unit,
+//    selectedIndex: Int,
+//    isErrorState: Boolean = false,
+//    errorMessage: String,
+//    title: String = "",
+//    options: List<String>
+//) {
+//    var expanded by remember { mutableStateOf(false) }
+//
+//    Column(horizontalAlignment = Alignment.Start) {
+//        Box(modifier = Modifier.clickable { expanded = true }) {
+//            OutlinedTextField(
+//                value = if (selectedIndex != -1) options[selectedIndex] else initialValue,
+//                onValueChange = {
+//                    valueChanged(it)
+//                },
+//                label = { Text(title) },
+//                isError = isErrorState,
+//                readOnly = true,
+//                singleLine = true,
+//                trailingIcon = {
+//                    Icon(
+//                        imageVector = Icons.Default.ArrowDropDown,
+//                        contentDescription = "Dropdown",
+//                        modifier = Modifier.clickable { expanded = true }
+//                    )
+//                }
+//            )
+//        }
+//
+//        DropdownMenu(
+//            expanded = expanded,
+//            onDismissRequest = { expanded = false },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(400.dp)
+//        ) {
+//            options.forEachIndexed { index, option ->
+//                DropdownMenuItem(
+//                    text = { Text(text = option) },
+//                    onClick = {
+//                        valueChanged(option)
+//                        retrieveClub()
+//                        indexChanged(index)
+//                        expanded = false
+//                    }
+//                )
+//            }
+//        }
+//
+//        if (isErrorState) {
+//            Text(
+//                modifier = Modifier.fillMaxWidth(),
+//                text = errorMessage,
+//                color = MaterialTheme.colorScheme.error
+//            )
+//        }
+//    }
+//}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun OutlinedTextFieldWithDropdown(
-    initialValue: String = "",
-    valueChanged: (String) -> Unit,
-    retrieveClub: () -> Unit,
-    indexChanged: (Int) -> Unit,
-    selectedIndex: Int,
-    isErrorState: Boolean = false,
-    errorMessage: String,
-    title: String = "",
-    options: List<String>
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Column(horizontalAlignment = Alignment.Start) {
-        Box(modifier = Modifier.clickable { expanded = true }) {
-            OutlinedTextField(
-                value = if (selectedIndex != -1) options[selectedIndex] else initialValue,
-                onValueChange = {
-                    valueChanged(it)
-                },
-                label = { Text(title) },
-                isError = isErrorState,
-                readOnly = true,
-                singleLine = true,
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Dropdown",
-                        modifier = Modifier.clickable { expanded = true }
-                    )
-                }
-            )
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)
-        ) {
-            options.forEachIndexed { index, option ->
-                DropdownMenuItem(
-                    text = { Text(text = option) },
-                    onClick = {
-                        valueChanged(option)
-                        retrieveClub()
-                        indexChanged(index)
-                        expanded = false
-                    }
-                )
-            }
-        }
-
-        if (isErrorState) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = errorMessage,
-                color = MaterialTheme.colorScheme.error
-            )
-        }
-    }
-}
-
-@Composable
-fun SubmitButton(modifier: Modifier = Modifier, processClubInputs: () -> Unit) {
-    Button(onClick = {
-        processClubInputs()
-    }) {
-        modifier.padding(8.dp)
-        Text(text = "Add Club")
-    }
-}
+//@Composable
+//fun SubmitButton(modifier: Modifier = Modifier, processClubInputs: () -> Unit) {
+//    Button(onClick = {
+//        processClubInputs()
+//    }) {
+//        modifier.padding(8.dp)
+//        Text(text = "Add Club")
+//    }
+//}
 
 //@Preview(showBackground = true)
 //@Composable

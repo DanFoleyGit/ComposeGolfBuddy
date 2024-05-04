@@ -195,11 +195,11 @@ class GbViewModel @Inject constructor(
     }
 
     private fun resetFields(resetIndex: Boolean = true) {
-        updateClubTypeValue("")
         updateClubBrandValue("")
         updateClubLoftValue("")
         updateClubDistanceValue("")
         if (resetIndex) {
+            updateClubTypeValue("")
             updateClubTypeIndex(-1)
         }
     }

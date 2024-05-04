@@ -57,7 +57,7 @@ fun ClubInfoRow(club: Club, modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

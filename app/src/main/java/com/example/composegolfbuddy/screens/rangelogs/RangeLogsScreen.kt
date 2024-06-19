@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.example.composegolfbuddy.screens.rangelogs
 
@@ -21,7 +20,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,14 +36,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.composegolfbuddy.Greeting
 import com.example.composegolfbuddy.designsystem.compents.BoldTextTitleWithContent
 import com.example.composegolfbuddy.designsystem.compents.RangeLogNoteWithScroll
 import com.example.composegolfbuddy.model.RangeLog
 import com.example.composegolfbuddy.screens.GolfBuddyScreenNames
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RangeLogsScreen(
     rangeLogsViewModel: RangeLogsViewModel,
@@ -58,7 +54,6 @@ fun RangeLogsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Greeting("Range Logs Coming Soon")
 
         val rangeLog = RangeLog(
             "Location",

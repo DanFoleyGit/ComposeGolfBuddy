@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.NoteAdd
 import androidx.compose.material.icons.filled.NoteAlt
 import androidx.compose.material.icons.filled.SportsGolf
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.NoteAdd
 import androidx.compose.material.icons.outlined.NoteAlt
 import androidx.compose.material.icons.outlined.SportsGolf
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,9 +45,9 @@ data class BottomNavigationItem(
 )
 
 enum class GolfBuddyScreenNames() {
-    Logs,
     Home,
     Clubs,
+    Logs,
     CreateLogs
 }
 
@@ -60,11 +62,6 @@ fun GolfBuddyScreen(
 
     val items = listOf(
         BottomNavigationItem(
-            title = "Range Logs",
-            selectedIcon = Icons.Filled.NoteAlt,
-            unSelectedIcon = Icons.Outlined.NoteAlt
-        ),
-        BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unSelectedIcon = Icons.Outlined.Home
@@ -73,11 +70,21 @@ fun GolfBuddyScreen(
             title = "clubs",
             selectedIcon = Icons.Filled.SportsGolf,
             unSelectedIcon = Icons.Outlined.SportsGolf
+        ),
+        BottomNavigationItem(
+            title = "Range Logs",
+            selectedIcon = Icons.Filled.NoteAlt,
+            unSelectedIcon = Icons.Outlined.NoteAlt
+        ),
+        BottomNavigationItem(
+            title = "Create Logs",
+            selectedIcon = Icons.Filled.NoteAdd,
+            unSelectedIcon = Icons.Outlined.NoteAdd
         )
     )
 
     var selectedIndex by rememberSaveable {
-        mutableStateOf(1)
+        mutableStateOf(0)
     }
     Scaffold(
         bottomBar = {
@@ -134,7 +141,10 @@ fun GolfBuddyScreen(
                     )
                 }
                 composable(route =GolfBuddyScreenNames.CreateLogs.name) {
-                    CreateRangeLogScreen(modifier = Modifier.fillMaxHeight())
+                    CreateRangeLogScreen(
+                        rangeLogsViewModel,
+                        modifier = Modifier.fillMaxHeight()
+                    )
                 }
             }
         }

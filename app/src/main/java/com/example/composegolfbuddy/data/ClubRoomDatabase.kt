@@ -1,27 +1,34 @@
-package com.multiplatform.clubdistances.data
+package com.example.composegolfbuddy.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.multiplatform.clubdistances.data.dao.ClubDao
+import com.example.composegolfbuddy.data.dao.ClubDao
+import com.example.composegolfbuddy.data.dao.RangeLogsDao
+import com.example.composegolfbuddy.model.RangeLog
 import com.multiplatform.clubdistances.homeScreen.model.Club
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Club class
-@Database(entities = arrayOf(Club::class), version = 1, exportSchema = false)
+@Database(
+    entities = arrayOf(
+        Club::class,
+        RangeLog::class
+    ), version = 1, exportSchema = false)
 abstract class ClubRoomDatabase : RoomDatabase() {
 
     abstract fun getClubDao(): ClubDao
+    abstract fun getRangeLogsDao(): RangeLogsDao
 
     private class ClubDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let {database ->
+            INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(database.getClubDao())
                 }

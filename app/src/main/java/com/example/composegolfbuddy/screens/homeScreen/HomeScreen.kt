@@ -57,7 +57,7 @@ fun ClubInfoRow(club: Club, modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -92,14 +92,19 @@ fun ClubInfoRow(club: Club, modifier: Modifier = Modifier) {
                     )
                 )
             }
-
-            Text(
-                text = "Yardage: ${club.distance}",
-                style = TextStyle(
-                    fontSize = 26.sp,
-                ),
+            Column(
+                horizontalAlignment = Alignment.End,
                 modifier = Modifier.padding(2.dp)
-            )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "${club.distance} Yards",
+                    style = TextStyle(
+                        fontSize = 26.sp,
+                    ),
+                    modifier = Modifier.padding(2.dp)
+                )
+            }
         }
     }
 }

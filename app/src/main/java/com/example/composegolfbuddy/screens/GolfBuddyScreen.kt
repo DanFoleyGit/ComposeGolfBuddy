@@ -1,13 +1,16 @@
 package com.example.composegolfbuddy.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.NoteAdd
 import androidx.compose.material.icons.filled.NoteAlt
 import androidx.compose.material.icons.filled.SportsGolf
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.NoteAdd
 import androidx.compose.material.icons.outlined.NoteAlt
 import androidx.compose.material.icons.outlined.SportsGolf
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,9 +31,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.composegolfbuddy.screens.createrangelog.CreateRangeLogScreen
 import com.example.composegolfbuddy.screens.homeScreen.HomeScreen
 import com.example.composegolfbuddy.screens.modifyclubsscreen.ModifyClubsScreen
 import com.example.composegolfbuddy.screens.rangelogs.RangeLogsScreen
+import com.example.composegolfbuddy.screens.rangelogs.RangeLogsViewModel
 
 
 data class BottomNavigationItem(
@@ -40,25 +45,22 @@ data class BottomNavigationItem(
 )
 
 enum class GolfBuddyScreenNames() {
-    Logs,
     Home,
-    Clubs
+    Clubs,
+    Logs,
+    CreateLogs
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GolfBuddyScreen(
-    viewModel: GbViewModel,
+    gbViewModel: GbViewModel,
+    rangeLogsViewModel: RangeLogsViewModel,
     navController: NavHostController = rememberNavController()
 ) {
 
     val items = listOf(
-        BottomNavigationItem(
-            title = "Range Logs",
-            selectedIcon = Icons.Filled.NoteAlt,
-            unSelectedIcon = Icons.Outlined.NoteAlt
-        ),
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
@@ -68,46 +70,51 @@ fun GolfBuddyScreen(
             title = "clubs",
             selectedIcon = Icons.Filled.SportsGolf,
             unSelectedIcon = Icons.Outlined.SportsGolf
+        ),
+        BottomNavigationItem(
+            title = "Range Logs",
+            selectedIcon = Icons.Filled.NoteAlt,
+            unSelectedIcon = Icons.Outlined.NoteAlt
+        ),
+        BottomNavigationItem(
+            title = "Create Logs",
+            selectedIcon = Icons.Filled.NoteAdd,
+            unSelectedIcon = Icons.Outlined.NoteAdd
         )
     )
 
     var selectedIndex by rememberSaveable {
-        mutableStateOf(1)
+        mutableStateOf(0)
     }
-
-//    Surface (
-//        modifier = Modifier.fillMaxSize(),
-//        color = MaterialTheme.colorScheme.background
-//    ) {
-        Scaffold(
-            bottomBar = {
-                NavigationBar() {
-                    items.forEachIndexed { index, item ->
-                        NavigationBarItem(
-                            selected = selectedIndex == index,
-                            onClick = {
-                                selectedIndex = index
-                                val enumVal = GolfBuddyScreenNames.values()[selectedIndex].name
-                                navController.navigate(GolfBuddyScreenNames.values()[selectedIndex].name)
-                            },
-                            label = {
-                                Text(text = item.title)
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = if (index == selectedIndex) {
-                                        item.selectedIcon
-                                    } else {
-                                        item.unSelectedIcon
-                                    },
-                                    contentDescription = item.title
-                                )
-                            }
-                        )
-                    }
+    Scaffold(
+        bottomBar = {
+            NavigationBar() {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        selected = selectedIndex == index,
+                        onClick = {
+                            selectedIndex = index
+                            navController.navigate(GolfBuddyScreenNames.values()[selectedIndex].name)
+                        },
+                        label = {
+                            Text(text = item.title)
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = if (index == selectedIndex) {
+                                    item.selectedIcon
+                                } else {
+                                    item.unSelectedIcon
+                                },
+                                contentDescription = item.title
+                            )
+                        }
+                    )
                 }
             }
-        ) {
+        }
+    ) { innerPadding ->
+        Box (modifier = Modifier.padding(innerPadding)){
             NavHost(
                 navController = navController,
                 startDestination = GolfBuddyScreenNames.Home.name,
@@ -115,26 +122,33 @@ fun GolfBuddyScreen(
             ) {
                 composable(route = GolfBuddyScreenNames.Home.name) {
                     HomeScreen(
-                        viewModel,
+                        gbViewModel,
                         modifier = Modifier.fillMaxHeight()
                     )
                 }
                 composable(route = GolfBuddyScreenNames.Clubs.name) {
                     ModifyClubsScreen(
-                        viewModel,
+                        gbViewModel,
                         modifier = Modifier.fillMaxHeight()
                     )
                 }
                 composable(route = GolfBuddyScreenNames.Logs.name) {
                     RangeLogsScreen(
+                        rangeLogsViewModel,
+                        navController,
                         modifier = Modifier
                             .fillMaxHeight()
                     )
                 }
+                composable(route =GolfBuddyScreenNames.CreateLogs.name) {
+                    CreateRangeLogScreen(
+                        rangeLogsViewModel,
+                        modifier = Modifier.fillMaxHeight()
+                    )
+                }
             }
         }
-//    }
-
+    }
 }
 
 //@Preview(showBackground = true)

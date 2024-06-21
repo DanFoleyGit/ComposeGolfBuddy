@@ -1,10 +1,13 @@
 package com.example.composegolfbuddy.di
 
+import com.example.composegolfbuddy.data.dao.ClubDao
+import com.example.composegolfbuddy.data.dao.RangeLogsDao
 import com.example.composegolfbuddy.repositories.ClubTypesRepository
 import com.example.composegolfbuddy.repositories.ClubsRepository
-import com.multiplatform.clubdistances.data.dao.ClubDao
+import com.example.composegolfbuddy.repositories.ClubsRepositoryImpl
+import com.example.composegolfbuddy.repositories.RangeLogsRepository
+import com.example.composegolfbuddy.repositories.RangeLogsRepositoryImpl
 import com.multiplatform.clubdistances.homeScreen.model.ClubTypes
-import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepositoryImpl
 import com.multiplatform.clubdistances.updateClubs.repositories.ClubTypesRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -23,5 +26,10 @@ object RepositoriesModule {
     @Provides
     fun provideClubTypesRepository(): ClubTypesRepository {
         return ClubTypesRepositoryImpl(ClubTypes())
+    }
+
+    @Provides
+    fun provideRangeLogsRepository(rangeLogsDao: RangeLogsDao): RangeLogsRepository {
+        return RangeLogsRepositoryImpl(rangeLogsDao)
     }
 }

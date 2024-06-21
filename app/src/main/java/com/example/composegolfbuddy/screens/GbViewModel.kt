@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composegolfbuddy.screens.homeScreen.HomeScreenUiState
 import com.example.composegolfbuddy.screens.modifyclubsscreen.ModifyClubsStateUI
+import com.example.composegolfbuddy.usecases.AddClubUseCase
 import com.example.composegolfbuddy.usecases.GetClubTypesUseCase
 import com.example.composegolfbuddy.usecases.GetClubsStaticUseCase
 import com.example.composegolfbuddy.usecases.RetrieveClubByNameUseCase
 import com.multiplatform.clubdistances.homeScreen.model.Club
-import com.multiplatform.clubdistances.homeScreen.useCases.AddClubUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -93,7 +93,6 @@ class GbViewModel @Inject constructor(
             clearErrorStates()
             insertClub()
             resetFields()
-            populateClubsData()
         }
     }
 
@@ -195,11 +194,11 @@ class GbViewModel @Inject constructor(
     }
 
     private fun resetFields(resetIndex: Boolean = true) {
-        updateClubTypeValue("")
         updateClubBrandValue("")
         updateClubLoftValue("")
         updateClubDistanceValue("")
         if (resetIndex) {
+            updateClubTypeValue("")
             updateClubTypeIndex(-1)
         }
     }
@@ -213,6 +212,7 @@ class GbViewModel @Inject constructor(
                 distanceInput.toInt()
             )
         )
+        populateClubsData()
     }
 
 }

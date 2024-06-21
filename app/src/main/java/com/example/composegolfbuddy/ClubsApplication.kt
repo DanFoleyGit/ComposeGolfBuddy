@@ -1,8 +1,8 @@
 package com.example.composegolfbuddy
 
 import android.app.Application
-import com.multiplatform.clubdistances.data.ClubRoomDatabase
-import com.multiplatform.clubdistances.homeScreen.repositories.ClubsRepositoryImpl
+import com.example.composegolfbuddy.data.ClubRoomDatabase
+import com.example.composegolfbuddy.repositories.ClubsRepositoryImpl
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

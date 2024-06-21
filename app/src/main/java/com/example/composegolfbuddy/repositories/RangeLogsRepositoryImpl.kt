@@ -12,4 +12,8 @@ class RangeLogsRepositoryImpl(private val rangeLogsDao: RangeLogsDao): RangeLogs
     override fun getAllRangeLogs(): Flow<List<RangeLog>> {
         return rangeLogsDao.getAll()
     }
+
+    override suspend fun deleteById(id: String) {
+        rangeLogsDao.deleteById(id)    }
+
 }

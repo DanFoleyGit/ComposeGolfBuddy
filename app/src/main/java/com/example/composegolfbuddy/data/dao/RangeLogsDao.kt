@@ -15,4 +15,7 @@ interface RangeLogsDao {
     @Insert
     suspend fun insert(rangeLog: RangeLog)
 
+    @Query("DELETE FROM range_log Where id = :id")
+    suspend fun deleteById(id: String)
+
 }

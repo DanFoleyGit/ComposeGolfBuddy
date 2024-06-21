@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composegolfbuddy.model.RangeLog
 import com.example.composegolfbuddy.usecases.AddRangeLogUseCase
+import com.example.composegolfbuddy.usecases.DeleteRangeLogUseCase
 import com.example.composegolfbuddy.usecases.GetAllRangeLogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RangeLogsViewModel @Inject constructor(
     private val addRangeLogUseCase: AddRangeLogUseCase,
-    private val getAllRangeLogsUseCase: GetAllRangeLogsUseCase
+    private val getAllRangeLogsUseCase: GetAllRangeLogsUseCase,
+    private val deleteRangeLogUseCase: DeleteRangeLogUseCase
 ) : ViewModel() {
 
     private var _createRangeLogsUiState = MutableStateFlow(CreateRangeLogsUiState())
@@ -95,6 +97,12 @@ class RangeLogsViewModel @Inject constructor(
         }
     }
 
+    fun deleteById(id: String) {
+        viewModelScope.launch {
+            deleteRangeLogUseCase.invoke(id)
+            populateRangeLogsList()
+        }
+    }
 
     private fun createRangeLog() = viewModelScope.launch {
         addRangeLogUseCase.insertRangeLog(

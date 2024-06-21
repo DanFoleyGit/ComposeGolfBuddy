@@ -8,4 +8,6 @@ interface RangeLogsRepository {
     suspend fun insertRangeLog(rangeLog: RangeLog)
 
     fun getAllRangeLogs(): Flow<List<RangeLog>>
+
+    suspend fun deleteById(id: String)
 }

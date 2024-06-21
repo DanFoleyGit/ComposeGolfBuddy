@@ -33,7 +33,10 @@ import androidx.compose.ui.unit.sp
 import com.example.composegolfbuddy.model.RangeLog
 
 @Composable
-fun RangeLogCard(rangeLog: RangeLog) {
+fun RangeLogCard(
+    rangeLog: RangeLog,
+    deleteRangeLogById: (String) -> Unit
+) {
     ElevatedCard(modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)
@@ -89,7 +92,7 @@ fun RangeLogCard(rangeLog: RangeLog) {
                         DropdownMenuItem(
                             text = { Text(text = "Delete") },
                             onClick = {
-                                // Delete Post
+                                deleteRangeLogById(rangeLog.id)
                                 expanded = false
                             }
                         )

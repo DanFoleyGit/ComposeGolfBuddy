@@ -70,7 +70,6 @@ fun CreateRangeLogScreen(
 
         Spacer(modifier = modifier.height(16.dp))
 
-//        MyDatePickerDialog { viewModel.updateRangeDate(it) }
         MyDatePickerDialog(
             modifier = Modifier,
             initialDate = viewModel.rangeDate, // Pass the rangeDate value

@@ -135,9 +135,7 @@ fun GolfBuddyScreen(
                 composable(route = GolfBuddyScreenNames.Logs.name) {
                     RangeLogsScreen(
                         rangeLogsViewModel,
-                        navController,
-                        modifier = Modifier
-                            .fillMaxHeight()
+                        modifier = Modifier.fillMaxHeight()
                     )
                 }
                 composable(route =GolfBuddyScreenNames.CreateLogs.name) {

@@ -1,4 +1,4 @@
-package com.multiplatform.clubdistances.homeScreen.useCases
+package com.example.composegolfbuddy.usecases
 
 import com.example.composegolfbuddy.repositories.ClubsRepository
 import com.multiplatform.clubdistances.homeScreen.model.Club

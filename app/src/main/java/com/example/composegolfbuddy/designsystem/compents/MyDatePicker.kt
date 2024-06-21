@@ -23,7 +23,6 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDatePickerDialog(
-//    modifier: Modifier = Modifier,
     onDateSelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -66,11 +65,10 @@ fun MyDatePickerDialog(
 @Composable
 fun MyDatePickerDialog(
     modifier: Modifier = Modifier,
-    updateDate: (String) -> Unit,
+    initialDate: String,
+    updateDate: (String) -> Unit
+
 ) {
-    var date by remember {
-        mutableStateOf("")
-    }
 
     var showDatePicker by remember {
         mutableStateOf(false)
@@ -80,7 +78,7 @@ fun MyDatePickerDialog(
 
         OutlinedTextField(
             modifier = modifier,
-            value = date,
+            value = initialDate,
             onValueChange = {},
             label = {
                 Text(
@@ -95,13 +93,11 @@ fun MyDatePickerDialog(
             },
             readOnly = true,
         )
-
     }
 
     if (showDatePicker) {
         MyDatePickerDialog(
             onDateSelected = {
-                date = it
                 updateDate(it)
              },
             onDismiss = { showDatePicker = false }

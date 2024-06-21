@@ -2,7 +2,7 @@ package com.example.composegolfbuddy.di
 
 import android.content.Context
 import androidx.room.Room
-import com.multiplatform.clubdistances.data.ClubRoomDatabase
+import com.example.composegolfbuddy.data.ClubRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +15,9 @@ import javax.inject.Singleton
 object DaoModule {
     @Provides
     fun provideClubDao(clubRooDatabase: ClubRoomDatabase) = clubRooDatabase.getClubDao()
+
+    @Provides
+    fun provideRangeLogsDao(clubRooDatabase: ClubRoomDatabase) = clubRooDatabase.getRangeLogsDao()
 
     @Singleton
     @Provides

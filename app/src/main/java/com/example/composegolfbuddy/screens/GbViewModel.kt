@@ -26,7 +26,7 @@ class GbViewModel @Inject constructor(
     private val getClubTypesUseCase: GetClubTypesUseCase,
     private val retrieveClubByNameUseCase: RetrieveClubByNameUseCase,
     private val addClubUseCase: AddClubUseCase,
-    private val getClubsStaticUseCase: GetClubsStaticUseCase
+    private val getClubsUseCase: GetClubsStaticUseCase
 ) : ViewModel() {
 
     // Home Screen UI state
@@ -82,7 +82,11 @@ class GbViewModel @Inject constructor(
     private fun populateClubsData() {
         viewModelScope.launch {
             _homeScreenState.update { currentState ->
-                currentState.copy(clubList = getClubsStaticUseCase.invoke().first())
+                val clubList = getClubsUseCase.invoke().first()
+                currentState.copy(
+                    clubList = clubList,
+                    showInformationField = clubList.isEmpty()
+                )
             }
         }
     }

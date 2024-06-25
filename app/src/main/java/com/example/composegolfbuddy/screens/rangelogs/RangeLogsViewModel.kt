@@ -69,7 +69,10 @@ class RangeLogsViewModel @Inject constructor(
     private fun populateRangeLogsList() {
         viewModelScope.launch {
             _createRangeLogsUiState.update {currentState ->
-                currentState.copy(rangeLogsList = getAllRangeLogsUseCase.invoke().first())
+                val rangeLogsList = getAllRangeLogsUseCase.invoke().first()
+                currentState.copy(
+                    rangeLogsList = rangeLogsList,
+                    displayHint = rangeLogsList.isEmpty())
             }
         }
     }

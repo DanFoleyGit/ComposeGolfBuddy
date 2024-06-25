@@ -49,7 +49,7 @@ fun CreateRangeLogScreen(
         Column(modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(4.dp)
             )
             .padding(4.dp)

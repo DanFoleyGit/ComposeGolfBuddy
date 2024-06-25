@@ -2,14 +2,21 @@ package com.example.composegolfbuddy.screens.modifyclubsscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.composegolfbuddy.designsystem.compents.ActionButton
 import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldForInputs
 import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldWithDropdown
-import com.example.composegolfbuddy.designsystem.compents.SubmitButton
 import com.example.composegolfbuddy.screens.GbViewModel
 
 @Composable
@@ -18,9 +25,12 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
     val state = viewModel.modifyClubsState.collectAsState()
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.Bottom
     ) {
 
         OutlinedTextFieldWithDropdown(
@@ -33,6 +43,8 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
             title = "Type",
             options = viewModel.clubTypesList
         )
+        
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextFieldForInputs(
             initialValue = viewModel.clubBrandInput,
@@ -62,7 +74,14 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f)
         )
 
-        SubmitButton(processClubInputs = viewModel::processClubInputs)
+//        SubmitButton(processClubInputs = viewModel::processClubInputs)
+        ActionButton(
+            doAction = { viewModel.processClubInputs() },
+            icon = Icons.Filled.Add,
+            textValue = "Add CLub"
+        )
+
+
     }
 }
 

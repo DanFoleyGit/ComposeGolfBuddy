@@ -17,14 +17,14 @@ fun ActionButton(doAction: () -> Unit, icon: ImageVector, textValue: String) {
     ElevatedButton(
         onClick = { doAction() }, // Wrap the function call in a lambda
         colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         Text(
             text = textValue,
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.onPrimary,
         )
         Icon(
             icon,

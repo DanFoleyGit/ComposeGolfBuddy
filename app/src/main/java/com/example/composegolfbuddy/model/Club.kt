@@ -1,4 +1,4 @@
-package com.multiplatform.clubdistances.homeScreen.model
+package com.example.composegolfbuddy.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,5 +9,7 @@ data class Club (
     @PrimaryKey @ColumnInfo(name = "club_name") val clubName: String,
     @ColumnInfo(name = "first_brand") val clubBrand: String,
     @ColumnInfo(name = "club_loft") val clubLoft: String,
-    @ColumnInfo(name = "distance") val distance: Int
+    @ColumnInfo(name = "distance") val distance: String,
+    @ColumnInfo(name = "distance2") val distance2: String,
+    @ColumnInfo(name = "distance3") val distance3: String,
 )

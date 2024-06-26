@@ -15,5 +15,7 @@ data class ModifyClubsStateUI(
     var clubLoftErrorMessage: String = "",
 
     var distanceError: Boolean = false,
-    var distanceErrorMessage: String = ""
+    var distanceErrorMessage: String = "",
+
+    var showExtraDistances: Boolean = false,
 )

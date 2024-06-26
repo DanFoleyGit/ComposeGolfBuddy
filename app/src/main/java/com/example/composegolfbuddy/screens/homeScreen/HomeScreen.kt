@@ -1,5 +1,10 @@
 package com.example.composegolfbuddy.screens.homeScreen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,19 +37,34 @@ fun HomeScreen(
     
     LazyColumn {
         items(homeScreenUiState.clubList) { club ->
-            ClubInfoRow(club)
+            ClubInfoRow(
+                club = club,
+                deleteClub =  { viewModel.deleteClub(club) }
+            )
         }
     }
 }
 
 @Composable
 fun HomeScreenInfoContainer(showInformationField: Boolean) {
-    if(showInformationField) {
+
+    AnimatedVisibility(
+        visible = showInformationField,
+        enter = expandVertically(
+            expandFrom = Alignment.Top,
+            animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+
+        ),
+        exit = shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+        )
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.primaryContainer,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     shape = RoundedCornerShape(4.dp)
                 )
                 .padding(8.dp)

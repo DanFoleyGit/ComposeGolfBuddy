@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.screens.rangelogs
+package com.example.composegolfbuddy.screens.createrangelog
 
 import com.example.composegolfbuddy.model.RangeLog
 

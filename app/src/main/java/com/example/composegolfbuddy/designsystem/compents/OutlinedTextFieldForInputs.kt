@@ -16,12 +16,17 @@ fun OutlinedTextFieldForInputs(
     errorMessage: String,
     title: String = "",
     maxLength: Int,
+    shouldAllowSpace: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
         value = initialValue,
         onValueChange = { newValue ->
-            if (!newValue.endsWith(' ')) {
+            if (!shouldAllowSpace && !newValue.endsWith(' ')) {
+                if (newValue.length <= maxLength) {
+                    valueChanged(newValue)
+                }
+            } else {
                 if (newValue.length <= maxLength) {
                     valueChanged(newValue)
                 }

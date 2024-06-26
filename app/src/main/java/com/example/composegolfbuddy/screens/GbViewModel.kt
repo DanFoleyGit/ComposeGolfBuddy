@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.composegolfbuddy.model.Club
 import com.example.composegolfbuddy.screens.homeScreen.HomeScreenUiState
 import com.example.composegolfbuddy.screens.modifyclubsscreen.ModifyClubsStateUI
 import com.example.composegolfbuddy.usecases.AddClubUseCase
+import com.example.composegolfbuddy.usecases.DeleteClubByNameUseCase
 import com.example.composegolfbuddy.usecases.GetClubTypesUseCase
 import com.example.composegolfbuddy.usecases.GetClubsStaticUseCase
 import com.example.composegolfbuddy.usecases.RetrieveClubByNameUseCase
-import com.multiplatform.clubdistances.homeScreen.model.Club
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +27,8 @@ class GbViewModel @Inject constructor(
     private val getClubTypesUseCase: GetClubTypesUseCase,
     private val retrieveClubByNameUseCase: RetrieveClubByNameUseCase,
     private val addClubUseCase: AddClubUseCase,
-    private val getClubsUseCase: GetClubsStaticUseCase
+    private val getClubsUseCase: GetClubsStaticUseCase,
+    private val deleteClubByNameUseCase: DeleteClubByNameUseCase
 ) : ViewModel() {
 
     // Home Screen UI state
@@ -50,6 +52,12 @@ class GbViewModel @Inject constructor(
     var clubLoftInput by mutableStateOf("")
         private set
     var distanceInput by mutableStateOf("")
+        private set
+
+    var distanceInput2 by mutableStateOf("")
+        private set
+
+    var distanceInput3 by mutableStateOf("")
         private set
 
     init {
@@ -78,6 +86,14 @@ class GbViewModel @Inject constructor(
         distanceInput = value
     }
 
+    fun updateClubDistance2Value(value: String) {
+        distanceInput2 = value
+    }
+
+    fun updateClubDistance3Value(value: String) {
+        distanceInput3 = value
+    }
+
     /* methods called in home screen */
     private fun populateClubsData() {
         viewModelScope.launch {
@@ -97,6 +113,14 @@ class GbViewModel @Inject constructor(
             clearErrorStates()
             insertClub()
             resetFields()
+        }
+    }
+
+    fun toggleShowExtraDistances(){
+        _modifyClubsState.update { it ->
+            it.copy(
+                showExtraDistances = !it.showExtraDistances
+            )
         }
     }
 
@@ -201,6 +225,13 @@ class GbViewModel @Inject constructor(
         updateClubBrandValue("")
         updateClubLoftValue("")
         updateClubDistanceValue("")
+        updateClubDistance2Value("")
+        updateClubDistance3Value("")
+
+        _modifyClubsState.update {
+            it.copy(showExtraDistances = false)
+        }
+
         if (resetIndex) {
             updateClubTypeValue("")
             updateClubTypeIndex(-1)
@@ -213,9 +244,16 @@ class GbViewModel @Inject constructor(
                 clubTypeInput,
                 clubBrandInput,
                 clubLoftInput,
-                distanceInput.toInt()
+                distanceInput,
+                distanceInput2,
+                distanceInput3
             )
         )
+        populateClubsData()
+    }
+
+    fun deleteClub(club: Club) = viewModelScope.launch {
+        deleteClubByNameUseCase.invoke(club)
         populateClubsData()
     }
 

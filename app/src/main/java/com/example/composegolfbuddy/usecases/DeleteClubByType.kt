@@ -4,11 +4,10 @@ import com.example.composegolfbuddy.model.Club
 import com.example.composegolfbuddy.repositories.ClubsRepository
 import javax.inject.Inject
 
-class AddClubUseCase @Inject constructor(
-    private val clubsRepository: ClubsRepository
+class DeleteClubByNameUseCase @Inject constructor(
+    private val clubRepository: ClubsRepository
 ) {
-
-    suspend fun invoke(club : Club) {
-        clubsRepository.insert(club)
+    suspend fun invoke(club: Club) {
+        clubRepository.deleteClub(club)
     }
 }

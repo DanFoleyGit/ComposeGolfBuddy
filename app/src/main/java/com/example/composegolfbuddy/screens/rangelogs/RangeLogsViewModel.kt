@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composegolfbuddy.model.RangeLog
+import com.example.composegolfbuddy.screens.createrangelog.CreateRangeLogsUiState
 import com.example.composegolfbuddy.usecases.AddRangeLogUseCase
 import com.example.composegolfbuddy.usecases.DeleteRangeLogUseCase
 import com.example.composegolfbuddy.usecases.GetAllRangeLogsUseCase

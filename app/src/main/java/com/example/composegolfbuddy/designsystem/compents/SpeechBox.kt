@@ -28,7 +28,7 @@ fun SpeechBox(text: String) {
         Triangle(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .offset(x = (-100).dp, y = 35.dp)
+                .offset(x = (0).dp, y = 35.dp)
         )
     }
 }
@@ -42,7 +42,7 @@ fun Triangle(modifier: Modifier = Modifier) {
     ) {
         drawPath(
             path = Path().apply {
-                moveTo(size.width / 1.5f, size.height) // Bottom tip
+                moveTo(size.width / 2f, size.height) // Bottom tip
                 lineTo(0f, 0f) // Top left
                 lineTo(size.width, 0f) // Top right
                 close()

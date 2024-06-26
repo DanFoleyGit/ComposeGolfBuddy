@@ -86,6 +86,7 @@ fun CreateRangeLogScreen(
             errorMessage = "",
             title = "Location",
             maxLength = 20,
+            shouldAllowSpace = true,
             modifier = Modifier.weight(1f)
         )
         
@@ -105,6 +106,7 @@ fun CreateRangeLogScreen(
             errorMessage = "",
             title = "Range Goal",
             maxLength = 40,
+            shouldAllowSpace = true,
             modifier = Modifier.weight(1f)
         )
 

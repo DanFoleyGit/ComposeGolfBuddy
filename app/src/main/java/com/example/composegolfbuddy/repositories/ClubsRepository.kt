@@ -1,5 +1,5 @@
 package com.example.composegolfbuddy.repositories
-import com.multiplatform.clubdistances.homeScreen.model.Club
+import com.example.composegolfbuddy.model.Club
 import kotlinx.coroutines.flow.Flow
 
 interface ClubsRepository {
@@ -8,4 +8,6 @@ interface ClubsRepository {
     suspend fun insert(club : Club)
 
     suspend fun retrieveClubByName(clubName : String): Club
+
+    suspend fun deleteClub(club : Club)
 }

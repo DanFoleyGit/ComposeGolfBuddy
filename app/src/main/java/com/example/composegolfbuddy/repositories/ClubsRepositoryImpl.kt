@@ -2,7 +2,7 @@ package com.example.composegolfbuddy.repositories
 
 import androidx.annotation.WorkerThread
 import com.example.composegolfbuddy.data.dao.ClubDao
-import com.multiplatform.clubdistances.homeScreen.model.Club
+import com.example.composegolfbuddy.model.Club
 import kotlinx.coroutines.flow.Flow
 
 class ClubsRepositoryImpl(private val clubDao: ClubDao) : ClubsRepository {
@@ -23,5 +23,9 @@ class ClubsRepositoryImpl(private val clubDao: ClubDao) : ClubsRepository {
 
     override suspend fun retrieveClubByName(clubName: String): Club {
         return clubDao.retrieveClubByName(clubName)
+    }
+
+    override suspend fun deleteClub(club: Club) {
+        clubDao.deleteClubByName(club.clubName)
     }
 }

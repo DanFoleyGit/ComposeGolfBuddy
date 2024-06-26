@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.composegolfbuddy.data.dao.ClubDao
 import com.example.composegolfbuddy.data.dao.RangeLogsDao
+import com.example.composegolfbuddy.model.Club
 import com.example.composegolfbuddy.model.RangeLog
-import com.multiplatform.clubdistances.homeScreen.model.Club
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -40,9 +40,9 @@ abstract class ClubRoomDatabase : RoomDatabase() {
             clubDao.deleteAll()
 
             // Add sample clubs.
-            var club = Club("7i","28","TaylorMade",144)
+            var club = Club("7i","28","TaylorMade","144","100", "80")
             clubDao.insert(club)
-            club = Club( "8i","34", "TaylorMade",132)
+            club = Club( "8i","34", "TaylorMade","132", "100", "80")
             clubDao.insert(club)
 
         }

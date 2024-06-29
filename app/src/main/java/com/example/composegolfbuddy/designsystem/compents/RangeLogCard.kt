@@ -12,9 +12,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.GolfCourse
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +46,7 @@ fun RangeLogCard(
 
     ){
         var expanded by rememberSaveable { mutableStateOf(false) }
+        val openAlertDialog = rememberSaveable { mutableStateOf(false) }
 
         Column(){
             Row(
@@ -81,21 +81,11 @@ fun RangeLogCard(
                 Row (modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End)
                 {
-                    IconButton(onClick = { expanded = true }) {
+                    IconButton(onClick = {
+                        expanded = true
+                        openAlertDialog.value = true
+                    }) {
                         Icon(Icons.Filled.DeleteOutline, "Floating action button.")
-                    }
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(text = "Delete") },
-                            onClick = {
-                                deleteRangeLogById(rangeLog.id)
-                                expanded = false
-                            }
-                        )
                     }
                 }
             }
@@ -116,6 +106,22 @@ fun RangeLogCard(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 RangeLogNoteWithScroll(rangeLog.summary, size = 16)
+            }
+        }
+
+        // handle delete dialog
+        when {
+            openAlertDialog.value -> {
+                DeleteDialog(
+                    onDismissRequest = { openAlertDialog.value = false },
+                    onConfirmation = {
+                        openAlertDialog.value = false
+                        deleteRangeLogById(rangeLog.id)
+                     },
+                    dialogTitle = "Are you sure you want to delete this log?",
+                    dialogText = "The log will from ${rangeLog.date} at ${rangeLog.location} will be deleted permanently",
+                    icon = Icons.Default.Info
+                )
             }
         }
     }

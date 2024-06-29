@@ -2,6 +2,10 @@
 package com.example.composegolfbuddy.screens.rangelogs
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,7 +28,6 @@ fun RangeLogsScreen(
     rangeLogsViewModel: RangeLogsViewModel,
     modifier: Modifier,
 ) {
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,20 +48,27 @@ fun RangeLogsScreen(
                 }
             }
 
-            if (createRangeLogsUiState.displayHint) {
-                Column(
-                    modifier
-                        .fillMaxHeight()
-                        .padding(bottom = 16.dp),
-                    verticalArrangement = Arrangement.Bottom
+            Column(
+                modifier.fillMaxHeight()
+                    .padding(bottom = 16.dp),
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = createRangeLogsUiState.displayHint,
+                    enter = expandVertically(
+                        expandFrom = Alignment.Bottom,
+                        animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+
+                    ),
+                    exit = shrinkVertically(
+                        shrinkTowards = Alignment.Bottom,
+                        animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+                    )
                 ) {
                     SpeechBox(text = "Click here to create your first range Log")
                 }
             }
         }
     }
-    
 }
-
-
 

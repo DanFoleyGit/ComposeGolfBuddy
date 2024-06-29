@@ -2,6 +2,8 @@ package com.example.composegolfbuddy.designsystem.compents
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -77,7 +80,7 @@ fun MyDatePickerDialog(
     Box(contentAlignment = Alignment.Center) {
 
         OutlinedTextField(
-            modifier = modifier,
+            modifier = modifier.width(280.dp),
             value = initialDate,
             onValueChange = {},
             label = {
@@ -90,6 +93,12 @@ fun MyDatePickerDialog(
                         }
                     )
                 )
+            },
+            trailingIcon = {
+                Box(
+                    modifier = Modifier.width(160.dp)
+                        .height(20.dp)
+                        .clickable { showDatePicker = true })
             },
             readOnly = true,
         )

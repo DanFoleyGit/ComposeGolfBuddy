@@ -116,11 +116,11 @@ fun ClubInfoRow(
 
         Row (
             modifier.fillMaxWidth()
-                .padding(top = 70.dp, bottom = 8.dp),
+                .padding(top = 80.dp, bottom = 8.dp),
             horizontalArrangement = Arrangement.Center,
         ){
             ToggleButton(
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(30.dp),
                 toggleOn = isExpanded,
                 onClick = { isExpanded = !isExpanded }
             )
@@ -138,61 +138,69 @@ fun ClubInfoRow(
                 shrinkTowards = Alignment.Top,
                 animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
             )
-        ) { // Expanded content as a new row
-
-            Column(
-                Modifier
-                .fillMaxWidth()
-                .padding(top = 90.dp, start = 8.dp, end = 8.dp)
-            ) {
-                if (club.distance2.isNotBlank()) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Knock-down: ",
-                            style = TextStyle(fontSize = 16.sp)
-                        )
-                        Text(
-                            text = "${club.distance2} Yards",
-                            style = TextStyle(fontSize = 26.sp)
-                        )
-                    }
-                }
-
-                if (club.distance3.isNotBlank()) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Shoulder-Shoulder: ",
-                            style = TextStyle(fontSize = 16.sp)
-                        )
-                        Text(
-                            text = "${club.distance3} Yards",
-                            style = TextStyle(fontSize = 26.sp)
-                        )
-                    }
-                }
-                IconButton(onClick = { isDeleteExpanded = true }) {
-                    Icon(Icons.Filled.DeleteOutline, "Floating action button.")
-                }
-                DropdownMenu(
-                    expanded = isDeleteExpanded,
-                    onDismissRequest = { isDeleteExpanded = false },
-                    modifier = Modifier
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(text = "Delete") },
-                        onClick = {
-                            deleteClub(club)
-                            isDeleteExpanded = false
-                        }
+        ) {
+            Box(
+                modifier.fillMaxSize()
+                    .padding(top = 115.dp, end = 10.dp, start = 10.dp, bottom = 0.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = RoundedCornerShape(4.dp)
                     )
+                    .clickable {
+                        isExpanded = !isExpanded
+                    }
+            ) {
+                Column(modifier = modifier.align(Alignment.BottomStart)) {
+                    IconButton(onClick = { isDeleteExpanded = true }) {
+                        Icon(Icons.Filled.DeleteOutline, "Floating action button.")
+                    }
+                    DropdownMenu(
+                        expanded = isDeleteExpanded,
+                        onDismissRequest = { isDeleteExpanded = false },
+                        modifier = Modifier
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "Delete") },
+                            onClick = {
+                                deleteClub(club)
+                                isDeleteExpanded = false
+                            }
+                        )
+                    }
+                }
+
+                Column(horizontalAlignment = Alignment.End) {
+                    if (club.distance2.isNotBlank()) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Grip-Down: ",
+                                style = TextStyle(fontSize = 16.sp)
+                            )
+                            Text(
+                                text = "${club.distance2} Yards",
+                                style = TextStyle(fontSize = 26.sp)
+                            )
+                        }
+                    }
+                    if (club.distance3.isNotBlank()) {
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Shoulder-Shoulder: ",
+                                style = TextStyle(fontSize = 16.sp)
+                            )
+                            Text(
+                                text = "${club.distance3} Yards",
+                                style = TextStyle(fontSize = 26.sp)
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -185,7 +185,7 @@ fun modifyClubsInfoContainer(showInformationField: Boolean, toggleVisible: () ->
             ) {
                 if (!showInformationField) {
                     Text(
-                        text = "Tips",
+                        text = "Tips and Tricks",
                         style = TextStyle(
                             fontSize = 20.sp, // Adjust size as needed
                         )

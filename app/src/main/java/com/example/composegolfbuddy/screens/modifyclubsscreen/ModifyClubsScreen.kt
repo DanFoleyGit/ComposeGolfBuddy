@@ -62,7 +62,7 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize()
         .verticalScroll(scrollState)
     ) {
-        modifyClubsInfoContainer(
+        ModifyClubsInfoContainer(
             showInformationField = showInfo.value
         ) { showInfo.value = !showInfo.value }
 
@@ -163,7 +163,7 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun modifyClubsInfoContainer(showInformationField: Boolean, toggleVisible: () -> Unit) {
+fun ModifyClubsInfoContainer(showInformationField: Boolean, toggleVisible: () -> Unit) {
 
     Box(
         modifier = Modifier.fillMaxWidth()
@@ -185,7 +185,7 @@ fun modifyClubsInfoContainer(showInformationField: Boolean, toggleVisible: () ->
             ) {
                 if (!showInformationField) {
                     Text(
-                        text = "Tips",
+                        text = "Tips and tricks",
                         style = TextStyle(
                             fontSize = 20.sp, // Adjust size as needed
                         )

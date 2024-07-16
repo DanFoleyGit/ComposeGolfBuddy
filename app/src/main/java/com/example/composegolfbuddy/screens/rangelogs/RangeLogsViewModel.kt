@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composegolfbuddy.model.RangeLog
-import com.example.composegolfbuddy.screens.createrangelog.CreateRangeLogsUiState
+import com.example.composegolfbuddy.screens.createrangelog.RangeLogsUiState
 import com.example.composegolfbuddy.usecases.AddRangeLogUseCase
 import com.example.composegolfbuddy.usecases.DeleteRangeLogUseCase
 import com.example.composegolfbuddy.usecases.GetAllRangeLogsUseCase
@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,8 +30,8 @@ class RangeLogsViewModel @Inject constructor(
     private val deleteRangeLogUseCase: DeleteRangeLogUseCase
 ) : ViewModel() {
 
-    private var _createRangeLogsUiState = MutableStateFlow(CreateRangeLogsUiState())
-    var createRangeLogsUiState: StateFlow<CreateRangeLogsUiState> = _createRangeLogsUiState.asStateFlow()
+    private var _RangeLogsUiState = MutableStateFlow(RangeLogsUiState())
+    var rangeLogsUiState: StateFlow<RangeLogsUiState> = _RangeLogsUiState.asStateFlow()
 
     var rangeLocation by mutableStateOf("")
         private set
@@ -61,19 +64,69 @@ class RangeLogsViewModel @Inject constructor(
         rangeSummary = value
     }
 
+    fun toggleSortByDate() {
+
+        if(!_RangeLogsUiState.value.isSortedByDate) {
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+            _RangeLogsUiState.update { currentState ->
+                val sortedList = currentState.rangeLogsList.sortedBy {
+                    dateFormat.parse(it.date) ?: Date(0)
+                }
+                currentState.copy(
+                    rangeLogsList = sortedList,
+                    isSortedByDate = true,
+                    isSortedByLocation = false,
+                    isASC = false
+                )
+            }
+        } else {
+            populateRangeLogsList()
+        }
+    }
+
+    fun toggleSortByLocation() {
+        if(!_RangeLogsUiState.value.isSortedByLocation) {
+            _RangeLogsUiState.update { currentState ->
+                val sortedList = currentState.rangeLogsList.sortedBy { it.location }
+                currentState.copy(
+                    rangeLogsList = sortedList,
+                    isSortedByDate = false,
+                    isSortedByLocation = true,
+                    isASC = false
+                )
+            }
+        } else {
+            populateRangeLogsList()
+        }
+    }
+
+    fun toggleAscendingDescending() {
+        _RangeLogsUiState.update { currentState ->
+            val sortedList = currentState.rangeLogsList.reversed()
+            currentState.copy(
+                rangeLogsList = sortedList,
+                isASC = !currentState.isASC
+            )
+        }
+    }
+
     init {
-        _createRangeLogsUiState.value = CreateRangeLogsUiState()
+        _RangeLogsUiState.value = RangeLogsUiState()
         clearAll()
         populateRangeLogsList()
     }
 
     private fun populateRangeLogsList() {
         viewModelScope.launch {
-            _createRangeLogsUiState.update {currentState ->
+            _RangeLogsUiState.update { currentState ->
                 val rangeLogsList = getAllRangeLogsUseCase.invoke().first()
                 currentState.copy(
                     rangeLogsList = rangeLogsList,
-                    displayHint = rangeLogsList.isEmpty())
+                    displayHint = rangeLogsList.isEmpty(),
+                    isSortedByDate = false,
+                    isSortedByLocation = false,
+                    isASC = false)
             }
         }
     }

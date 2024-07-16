@@ -24,10 +24,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composegolfbuddy.designsystem.compents.ActionButton
-import com.example.composegolfbuddy.designsystem.compents.MyDatePickerDialog
-import com.example.composegolfbuddy.designsystem.compents.OutlinedLargeTextField
-import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldForInputs
+import com.example.composegolfbuddy.designsystem.components.ActionButton
+import com.example.composegolfbuddy.designsystem.components.MyDatePickerDialog
+import com.example.composegolfbuddy.designsystem.components.OutlinedLargeTextField
+import com.example.composegolfbuddy.designsystem.components.OutlinedTextFieldForInputs
 import com.example.composegolfbuddy.screens.rangelogs.RangeLogsViewModel
 
 @Composable
@@ -64,7 +64,7 @@ fun CreateRangeLogScreen(
             )
 
             Text(text = "- Any new feels you want to remember?")
-            Text(text = "- Mention what went right and what can be worked on")
+            Text(text = "- Mention what went right and what can be worked on.")
         }
 
 

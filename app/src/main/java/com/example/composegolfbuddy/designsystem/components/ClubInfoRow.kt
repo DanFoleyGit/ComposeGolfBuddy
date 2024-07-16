@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.designsystem.compents
+package com.example.composegolfbuddy.designsystem.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -52,7 +52,7 @@ fun ClubInfoRow(
             .fillMaxSize()
             .padding(10.dp)
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(4.dp)
             )
             .clickable {
@@ -143,7 +143,7 @@ fun ClubInfoRow(
                 modifier.fillMaxSize()
                     .padding(top = 115.dp, end = 10.dp, start = 10.dp, bottom = 0.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
+                        color = MaterialTheme.colorScheme.secondaryContainer,
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {

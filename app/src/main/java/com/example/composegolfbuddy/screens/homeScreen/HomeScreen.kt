@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.composegolfbuddy.designsystem.compents.ClubInfoRow
-import com.example.composegolfbuddy.designsystem.compents.TextHeader
+import com.example.composegolfbuddy.designsystem.components.ClubInfoRow
+import com.example.composegolfbuddy.designsystem.components.TextHeader
 import com.example.composegolfbuddy.screens.GbViewModel
 
 @Composable

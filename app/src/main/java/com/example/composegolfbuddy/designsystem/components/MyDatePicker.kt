@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.designsystem.compents
+package com.example.composegolfbuddy.designsystem.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

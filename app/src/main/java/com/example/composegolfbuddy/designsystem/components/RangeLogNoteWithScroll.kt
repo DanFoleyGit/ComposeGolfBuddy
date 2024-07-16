@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.designsystem.compents
+package com.example.composegolfbuddy.designsystem.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth

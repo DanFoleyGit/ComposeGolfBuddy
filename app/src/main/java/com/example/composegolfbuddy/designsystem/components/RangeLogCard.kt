@@ -1,4 +1,4 @@
-package com.example.composegolfbuddy.designsystem.compents
+package com.example.composegolfbuddy.designsystem.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +41,7 @@ fun RangeLogCard(
         .padding(8.dp)
         .wrapContentHeight(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
         )
 
     ){

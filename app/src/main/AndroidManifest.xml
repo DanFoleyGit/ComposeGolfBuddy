@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".ClubsApplication"
+        android:name="composegolfbuddy.ClubsApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ComposeGolfBuddy"
         tools:targetApi="34">
         <activity
-            android:name=".MainActivity"
+            android:name="composegolfbuddy.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeGolfBuddy">

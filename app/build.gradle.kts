@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.composegolfbuddy"
+    namespace = "composegolfbuddy"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.composegolfbuddy"
+        applicationId = "danfoleyapps.composegolfbuddy"
         minSdk = 30
         targetSdk = 34
         versionCode = 1

@@ -1,6 +1,12 @@
 package com.example.composegolfbuddy.screens.modifyclubsscreen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,13 +24,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -32,11 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composegolfbuddy.designsystem.components.ActionButton
-import com.example.composegolfbuddy.designsystem.components.InfoDialog
-import com.example.composegolfbuddy.designsystem.components.OutlinedTextFieldForInputs
-import com.example.composegolfbuddy.designsystem.components.OutlinedTextFieldWithDropdown
-import com.example.composegolfbuddy.designsystem.components.ToggleButton
+import com.example.composegolfbuddy.designsystem.compents.ActionButton
+import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldForInputs
+import com.example.composegolfbuddy.designsystem.compents.OutlinedTextFieldWithDropdown
+import com.example.composegolfbuddy.designsystem.compents.TextHeader
+import com.example.composegolfbuddy.designsystem.compents.ToggleButton
 import com.example.composegolfbuddy.screens.GbViewModel
 
 
@@ -45,49 +52,23 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
 
     val state = viewModel.modifyClubsState.collectAsState()
     val showInfo = rememberSaveable { mutableStateOf(false) }
+    val infoContainerHeight by animateDpAsState(
+        targetValue = if (showInfo.value) 400.dp else 100.dp,
+        animationSpec = tween(durationMillis = 300)
+    )
     val scrollState = rememberScrollState()
 
     Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxSize()
-            .verticalScroll(scrollState)
+        modifier = Modifier.fillMaxSize()
+        .verticalScroll(scrollState)
     ) {
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth().padding(start = 200.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        shape = RoundedCornerShape(20.dp)
-                    ).clickable { showInfo.value = !showInfo.value }
-            ) {
-                Row(
-                    modifier = Modifier.padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.QuestionMark,
-                        contentDescription = "Info",
-                    )
-                    Text(
-                        text = "Tips",
-                        style = TextStyle(
-                            fontSize = 20.sp, // Adjust size as needed
-                        )
-                    )
-                }
-            }
-        }
-
+        ModifyClubsInfoContainer(
+            showInformationField = showInfo.value
+        ) { showInfo.value = !showInfo.value }
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 70.dp, bottom = 16.dp)
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = infoContainerHeight.value.dp, bottom = 16.dp)
                 .align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -180,21 +161,82 @@ fun ModifyClubsScreen(viewModel: GbViewModel, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+@Composable
+fun ModifyClubsInfoContainer(showInformationField: Boolean, toggleVisible: () -> Unit) {
 
-    when {
-        showInfo.value -> {
-            InfoDialog(
-                onDismissRequest = { showInfo.value = false },
-                onConfirmation = { showInfo.value = false },
-                dialogTitle = "Tips and Tricks",
-                dialogText = "Create Clubs\n" +
-                        "- Select the club type from the drop down menu.\n" +
-                        "- Enter the brand, club loft and Distance.\n" +
-                        "- Additional distances can be enter such as a \'Grip-Down\' and \'Shoulder-To-Shoulder\'\n\n" +
-                        "Edit Clubs\n" +
-                        "- Select the club type you wish to edit fro the drop down menu and the details will auto fill.",
-                icon = Icons.Default.Info
+    Box(
+        modifier = Modifier.fillMaxWidth()
+            .padding(16.dp)
+            .background(
+                color = MaterialTheme.colorScheme.secondaryContainer,
+                shape = RoundedCornerShape(20.dp)
             )
+            .clickable { toggleVisible() },
+        contentAlignment = Alignment.TopStart,
+
+        ){
+
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (!showInformationField) {
+                    Text(
+                        text = "Tips and tricks",
+                        style = TextStyle(
+                            fontSize = 20.sp, // Adjust size as needed
+                        )
+                    )
+                    Icon(
+                        imageVector = Icons.Default.QuestionMark,
+                        contentDescription = "Info",
+                        modifier = Modifier.padding(8.dp)
+                    )
+
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Info",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = showInformationField,
+                enter = expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+                ),
+                exit = shrinkVertically(
+                    shrinkTowards = Alignment.Top,
+                    animationSpec = SpringSpec(stiffness = Spring.StiffnessLow)
+                ),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .background(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            shape = RoundedCornerShape(4.dp)
+                        ),
+                ) {
+                    TextHeader("Create Clubs")
+                    Text(
+                        text = "- Select the club type from the drop down menu.\n" +
+                                "- Enter the brand, club loft and Distance.\n" +
+                                "- Additional distances can be enter such as a \'Grip-Down\' and \'Shoulder-To-Shoulder\'",
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                    TextHeader("Edit Clubs")
+                    Text(
+                        text = "- Select the club type you wish to edit fro the drop down menu and the details will auto fill.\n",
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+            }
         }
     }
 }

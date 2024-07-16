@@ -17,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -98,7 +97,8 @@ class GbViewModel @Inject constructor(
     private fun populateClubsData() {
         viewModelScope.launch {
             _homeScreenState.update { currentState ->
-                val clubList = getClubsUseCase.invoke().first()
+                val clubList = getClubsUseCase.invoke()
+
                 currentState.copy(
                     clubList = clubList,
                     showInformationField = clubList.isEmpty()
@@ -130,7 +130,9 @@ class GbViewModel @Inject constructor(
             if (retrievedClub != null) {
                 updateClubBrandValue(retrievedClub.clubBrand)
                 updateClubLoftValue(retrievedClub.clubLoft)
-                updateClubDistanceValue(retrievedClub.distance.toString())
+                updateClubDistanceValue(retrievedClub.distance)
+                updateClubDistance2Value(retrievedClub.distance2)
+                updateClubDistance3Value(retrievedClub.distance3)
                 clearErrorStates()
             } else {
                 resetFields(false)

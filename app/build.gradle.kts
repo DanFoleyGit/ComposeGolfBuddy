@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.composegolfbuddy"
+    namespace = "composegolfbuddy"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.composegolfbuddy"
+        applicationId = "danfoleyapps.composegolfbuddy"
         minSdk = 30
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 103
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -25,7 +25,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

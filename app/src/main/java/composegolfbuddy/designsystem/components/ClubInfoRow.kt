@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -53,7 +55,7 @@ fun ClubInfoRow(
             .padding(10.dp)
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(20.dp)
             )
             .clickable {
                 isExpanded = !isExpanded
@@ -62,63 +64,35 @@ fun ClubInfoRow(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Start,
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = club.clubName,
-                style = TextStyle(
-                    fontSize = 30.sp,
-                ),
+            Box(
                 modifier = Modifier
                     .size(64.dp)
                     .background(
                         color = MaterialTheme.colorScheme.surfaceContainerLow,
                         shape = CircleShape
-                    )
-                    .padding(top = 12.dp),
-                textAlign = TextAlign.Center
-            )
-            Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.padding(2.dp)
-            ) {
-                Text(
-                    text = "Loft: ${club.clubLoft}",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-                )
-                Text(
-                    text = "Make: ${club.clubBrand}",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-                )
-            }
-            Column(
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "${club.distance} Yards",
-                    style = TextStyle(
-                        fontSize = 26.sp,
                     ),
-                    modifier = Modifier.padding(2.dp)
+                contentAlignment = Alignment.Center,
+            ){
+                Text(
+                    text = club.clubName,
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                    ),
+                    textAlign = TextAlign.Center
                 )
             }
 
-        }
+            Text(
+                text = "${club.distance} Yards",
+                style = TextStyle(
+                    fontSize = 26.sp,
+                )
+            )
 
-        Row (
-            modifier.fillMaxWidth()
-                .padding(top = 80.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-        ){
             ToggleButton(
                 modifier = Modifier.size(30.dp),
                 toggleOn = isExpanded,
@@ -140,17 +114,17 @@ fun ClubInfoRow(
             )
         ) {
             Box(
-                modifier.fillMaxSize()
-                    .padding(top = 115.dp, end = 10.dp, start = 10.dp, bottom = 0.dp)
+                modifier
+                    .fillMaxSize()
+                    .padding(top = 92.dp, end = 10.dp, start = 10.dp, bottom = 10.dp)
                     .background(
                         color = MaterialTheme.colorScheme.secondaryContainer,
-                        shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
                         isExpanded = !isExpanded
                     }
             ) {
-                Column(modifier = modifier.align(Alignment.BottomStart)) {
+                Column(modifier = modifier.align(Alignment.BottomEnd)) {
                     IconButton(onClick = { isDeleteExpanded = true }) {
                         Icon(Icons.Filled.DeleteOutline, "Floating action button.")
                     }
@@ -169,38 +143,22 @@ fun ClubInfoRow(
                     }
                 }
 
-                Column(horizontalAlignment = Alignment.End) {
-                    if (club.distance2.isNotBlank()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Grip-Down: ",
-                                style = TextStyle(fontSize = 16.sp)
-                            )
-                            Text(
-                                text = "${club.distance2} Yards",
-                                style = TextStyle(fontSize = 26.sp)
-                            )
-                        }
+                Column(
+                    modifier = Modifier.fillMaxWidth(0.8f),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    if(club.distance2.isNotBlank()) {
+                        BoldTextTitleWithContent("GripDown: ", club.distance2 + " Yards", 20)
+                        Spacer(modifier = modifier.height(8.dp))
                     }
-                    if (club.distance3.isNotBlank()) {
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Shoulder-Shoulder: ",
-                                style = TextStyle(fontSize = 16.sp)
-                            )
-                            Text(
-                                text = "${club.distance3} Yards",
-                                style = TextStyle(fontSize = 26.sp)
-                            )
-                        }
+                    if(club.distance3.isNotBlank()) {
+                        BoldTextTitleWithContent("Shoulder-Shoulder: ", club.distance3 + " Yards", 20
+                        )
+                        Spacer(modifier = modifier.height(8.dp))
                     }
+                    BoldTextTitleWithContent("Make: ", club.clubBrand, 20 )
+                    Spacer(modifier = modifier.height(8.dp))
+                    BoldTextTitleWithContent("Loft: ", club.clubLoft, 20 )
                 }
             }
         }

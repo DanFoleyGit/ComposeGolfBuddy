@@ -2,6 +2,7 @@ package composegolfbuddy.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -30,9 +32,13 @@ fun SortButton(
             .padding(8.dp)
             .background(
                 if (isSortActive) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(50.dp)
             )
-            .clickable { onClick() }
+            .clickable (
+                onClick = onClick,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            )
     ){
         Row(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
@@ -41,7 +47,8 @@ fun SortButton(
             Text(
                 text = if (isSortActive) trueText else falseText,
                 color = MaterialTheme.colorScheme.onPrimary,
-            )
+                style = MaterialTheme.typography.headlineSmall
+                )
             if (icon != null) {
                 Icon(
                     icon,

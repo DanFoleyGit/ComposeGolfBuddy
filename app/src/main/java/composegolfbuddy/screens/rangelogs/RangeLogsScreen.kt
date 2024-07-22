@@ -41,9 +41,11 @@ fun RangeLogsScreen(
         val rangeLogsUiState by rangeLogsViewModel.rangeLogsUiState.collectAsState()
 
         Scaffold {
-            Column(horizontalAlignment = Alignment.Start) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(8.dp)) {
+                    ) {
                     SortButton(
                         trueText = "Date",
                         falseText = "Date",
